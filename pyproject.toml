@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pyeml"
+version = "0.1.0"
+description = "EML symbolic regression: all elementary functions from exp(x) - ln(y)"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+dependencies = [
+    "torch>=2.0",
+    "numpy>=1.24",
+]
+keywords = ["symbolic-regression", "eml", "mathematics", "scientific-computing"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "pytest-cov"]
+
+[project.scripts]
+pyeml = "pyeml._cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pyeml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
