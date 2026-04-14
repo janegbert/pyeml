@@ -100,6 +100,10 @@ src/pyeml/
 }
 ```
 
+## Built with
+
+This package was built with [Claude Code](https://claude.ai/code) (Claude Opus 4.6). It typed fast.
+
 ## License
 
 MIT
