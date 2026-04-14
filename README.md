@@ -1,5 +1,9 @@
 # pyeml
 
+[![Tests](https://github.com/janegbert/pyeml/actions/workflows/tests.yml/badge.svg)](https://github.com/janegbert/pyeml/actions/workflows/tests.yml)
+[![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 Symbolic regression using a single universal operator: **eml(x, y) = exp(x) - ln(y)**.
 
 Based on [Odrzywołek (2026)](https://arxiv.org/abs/2603.21852): *"All elementary functions from a single binary operator"*. This operator, together with the constant 1, can express every elementary function — sin, cos, sqrt, log, +, -, \*, /, and more. The continuous-math equivalent of NAND in digital logic.
