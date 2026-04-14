@@ -146,9 +146,10 @@ def _train_single(
     """Train one model. Returns (final_loss, history) or None if diverged."""
     optimizer = torch.optim.Adam(model.parameters(), lr=tc.lr)
     harden_epoch = int(tc.epochs * tc.harden_start)
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=harden_epoch)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max(1, harden_epoch))
 
     history: list[float] = []
+    loss_val = float("inf")
 
     for epoch in range(tc.epochs):
         optimizer.zero_grad()

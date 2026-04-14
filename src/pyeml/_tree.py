@@ -59,7 +59,7 @@ class EMLTree(nn.Module):
         # Compute leaf values: softmax(logits) @ [1, x]
         if gumbel and self.training:
             leaf_w = F.gumbel_softmax(
-                self.leaf_logits / temperature, tau=1.0, hard=False
+                self.leaf_logits, tau=temperature, hard=False
             ).to(DTYPE)
         else:
             leaf_w = F.softmax(self.leaf_logits / temperature, dim=1).to(DTYPE)
@@ -71,7 +71,7 @@ class EMLTree(nn.Module):
         # Internal non-root nodes, bottom-up
         if gumbel and self.training:
             mix_w = F.gumbel_softmax(
-                self.mixing_logits / temperature, tau=1.0, hard=False
+                self.mixing_logits, tau=temperature, hard=False
             ).to(DTYPE) if self.mixing_logits.numel() > 0 else None
         else:
             mix_w = F.softmax(

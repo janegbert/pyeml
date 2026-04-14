@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import warnings
+
 import torch
 import torch.nn.functional as F
 
@@ -12,7 +14,19 @@ def extract_expression(model: EMLTree) -> str:
     """Extract the symbolic EML expression from a snapped model.
 
     Returns a string like "eml(x, 1)" or "eml(1, eml(eml(1, x), 1))".
+    The model should be snapped first (call model.snap_weights()).
     """
+    # Check if model looks snapped
+    for logits in [model.leaf_logits, model.mixing_logits]:
+        if logits.numel() > 0:
+            probs = F.softmax(logits, dim=1)
+            if probs.max(dim=1).values.min().item() < 0.9:
+                warnings.warn(
+                    "Model does not appear to be snapped. "
+                    "Call model.snap_weights() before extracting expressions.",
+                    stacklevel=2,
+                )
+                break
     return _node_expr(model, node_idx=0)
 
 

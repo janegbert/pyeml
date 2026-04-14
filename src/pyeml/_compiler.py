@@ -9,13 +9,14 @@ Known identities from the paper:
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from typing import Literal
 
 
-@dataclass
+@dataclass(frozen=True)
 class EMLNode:
-    """Node in an EML expression tree."""
+    """Node in an EML expression tree (immutable)."""
 
     kind: Literal["eml", "const", "var"]
     left: EMLNode | None = None
@@ -24,7 +25,9 @@ class EMLNode:
 
     def __str__(self) -> str:
         if self.kind == "const":
-            return str(int(self.value)) if self.value == int(self.value) else str(self.value)
+            if self.value is not None and math.isfinite(self.value) and self.value == int(self.value):
+                return str(int(self.value))
+            return str(self.value)
         if self.kind == "var":
             return "x"
         return f"eml({self.left}, {self.right})"
